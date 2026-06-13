@@ -10,7 +10,7 @@ let playerTurn = 1; // 1 means X ; 0 means O
 
 
 //Console.log/dir || alert for debugging
-let debug = true; // set this to false in production
+let debug = false; // set this to false in production
 function debugLog(text, loud=0) {
   if (!debug) {
     return

@@ -8,9 +8,19 @@ let playGame = true;
 let grid = [null, null, null, null, null, null, null, null, null];
 let playerTurn = 1; // 1 means X ; 0 means O
 
+restartBtn.addEventListener("click", (evt) => {
+    playGame = true;
+    grid = [null, null, null, null, null, null, null, null, null];
+    playerTurn = 1;
+    restartBtn.hidden = true;
+    cleanBoard()
+    board.hidden = false;
+}) 
+restartBtn.hidden = true;
+
 
 //Console.log/dir || alert for debugging
-let debug = false; // set this to false in production
+let debug = true; // set this to false in production
 function debugLog(text, loud=0) {
   if (!debug) {
     return
@@ -71,15 +81,15 @@ function checkWinManager() {
     debugLog(`${grid} || 0 won! `)
     status.innerHTML = "<h2>Player O Won The Match! </h2>"
     stopGame()
-  }
-  if (checkWin(1) == true) {
-    debugLog(`${grid} || X won! `)
-    status.innerHTML = "<h2>Player X Won The Match! </h2>"
-    stopGame()
-  }
-  if (!grid.includes(null)) {
-    status.innerHTML = "<h2>Its a Draw</h2>"
-    stopGame()
+  } else if (checkWin(1) == true) {
+      debugLog(`${grid} || X won! `)
+      status.innerHTML = "<h2>Player X Won The Match! </h2>"
+      stopGame()
+  } else if (!grid.includes(null)) {
+      debugLog(grid)
+      debugLog(`!grid.includes(null)${!grid.includes(null)} || grid.includes(null)${grid.includes(null)}`)
+      status.innerHTML = "<h2>Its a Draw</h2>"
+      stopGame()
   }
 }
 
@@ -120,23 +130,11 @@ function stopGame() {
   board.hidden = true;
   debugLog(`board.hidden = ${board.hidden}`)
   fillExtraGrid()
-  restartGame()
-  
-  
-}
-
-
-function restartGame() {
   restartBtn.hidden = false;
-  restartBtn.addEventListener("click", (evt) => {
-    playGame = true;
-    grid = [null, null, null, null, null, null, null, null, null];
-    playerTurn = 1;
-    restartBtn.hidden = true;
-    cleanBoard()
-    board.hidden = false;
-  })
 }
+  
+
+
 
 function cleanBoard() {
   for (let i = 0; i != 9; i++) {
@@ -146,8 +144,8 @@ function cleanBoard() {
 }
 
 function fillExtraGrid() {
-  for (var i = 0; i < grid.length; i++) {
-    if (grid[i] == null) {
+  for (let i = 0; i < grid.length; i++) {
+    if (grid[i] === null) {
       grid[i] = "Extra"
     }
   }
